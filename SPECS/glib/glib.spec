@@ -2,7 +2,7 @@
 Summary:        Low-level libraries useful for providing data structure handling for C.
 Name:           glib
 Version:        2.78.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        LGPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Azure Linux
@@ -123,11 +123,11 @@ touch %{buildroot}%{_libdir}/gio/modules/giomodule.cache
 %doc %{_datadir}/gtk-doc/html/*
 
 %changelog
+* Mon Apr 01 2024 Betty Lakes <bettylakes@microsoft.com> - 2.78.1-3
+- Move to pcre2
+
 * Fri Mar 15 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.78.1-2
 - Adding link for gio-querymodules.
-
-* Fri Mar 08 2024 Betty Lakes <bettylakes@microsoft.com> - 2.78.1-2
-- Move to pcre2
 
 * Mon Nov 27 2023 Andrew Phelps <anphel@microsoft.com> - 2.78.1-1
 - Upgrade to version 2.78.1
