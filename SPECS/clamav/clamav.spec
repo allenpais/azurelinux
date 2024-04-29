@@ -12,6 +12,8 @@ Source0:        https://github.com/Cisco-Talos/clamav/archive/refs/tags/%{name}-
 # To update the cache run:
 #   [repo_root]/toolkit/scripts/build_cargo_cache.sh %%{name}-%%{version}.tar.gz %%{name}-%%{name}-%%{version}
 Source1:        %{name}-%{version}-cargo.tar.gz
+Source2:        clamd@.service
+Patch1:         clamav-clamonacc-service.patch
 BuildRequires:  bzip2-devel
 BuildRequires:  check-devel
 BuildRequires:  cmake
@@ -52,7 +54,7 @@ mkdir -p $HOME
 pushd $HOME
 tar xf %{SOURCE1} --no-same-owner
 popd
-%autosetup -n clamav-clamav-%{version}
+%autosetup -p1 -n clamav-clamav-%{version}
 
 %build
 export CARGO_NET_OFFLINE=true
@@ -84,6 +86,11 @@ cd build
 # do not install html doc ('clamav' cmake has no flag to specify that => remove the doc)
 rm -rf %{buildroot}%{_docdir}
 mkdir -p %{buildroot}%{_sharedstatedir}/clamav
+
+## For compatibility with 0.102.2-7
+ln -s clamav-clamonacc.service      %{buildroot}%{_unitdir}/clamonacc.service
+
+install -D -p -m 0644 %{SOURCE2}    %{buildroot}%{_unitdir}/clamd@.service
 
 ### freshclam config processing (from Fedora)
 sed -ri \
